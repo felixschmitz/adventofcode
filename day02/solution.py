@@ -2,40 +2,67 @@ def load_data(file: str) -> str:
     with open(file, 'r', encoding='utf-8') as fhandle:
         return fhandle.read()
 
+
 def parse_data(content: str) -> list:
-    games = [tuple(game.replace(' ', '')) for game in content.splitlines()]
+    games = [parse_game(game) for game in content.splitlines()]
     return games
 
-def myself_outcome(selection: tuple) -> tuple:
-    loosing_combinations = [('A', 'Z'), ('C', 'Y'), ('B', 'X')]
-    d = {'oponent': ['A', 'B', 'C'], 'myself': ['X', 'Y', 'Z']}
-    selection_points_myself = d['myself'].index(selection[1]) + 1
-    if d['oponent'].index(selection[0]) != d['myself'].index(selection[1]):
-        if selection in loosing_combinations:
-            return -1, selection_points_myself
-        else:
-            return 1, selection_points_myself
-    else:
-        return 0, selection_points_myself
 
+def parse_game(game: str):
+    choices = ['A', 'B', 'C', 'X', 'Y', 'Z']
+    game = game.replace(' ', '')
+    game = [choices.index(choice) % 3 + 1 for choice in game]
+    return game
+    
 
-def update_score(outcome: int, selection_points_myself: int) -> int:
-    if outcome == 0:
-        return 3 + selection_points_myself
-    elif outcome == 1:
-        return 6 + selection_points_myself
+def update_score_first(game: list) -> int:
+    loosing_combinations = [[1, 3], [3, 2], [2, 1]]
+    if game[0] == game[1]:
+        return game[1] + 3
+    elif game in loosing_combinations:
+        return game[1]
     else:
-        return 0 + selection_points_myself
+        return game[1] + 6
+
+def update_score_second(game: list) -> int:
+    combinations = [[1, 3], [3, 2], [2, 1]]
+    # X/1 -> loose, Y/2 -> draw, Z/3 -> win
+    if game[1] == 1:
+        idx = [combination[0] for combination in combinations].index(game[0])
+        choice = combinations[idx][1]
+        #print(game, choice)
+        return choice
+    elif game[1] == 2:
+        choice = game[0]
+        return choice + 3
+    else:
+        idx = [combination[1] for combination in combinations].index(game[0])
+        choice = combinations[idx][0]
+        return choice + 6
 
 
 def first_task(file: str):
     content = load_data(file)
     games = parse_data(content)
-    points_myself = 0
+    score = 0
     for game in games:
-        outcome, selection_points_myself = myself_outcome(game)
-        points_myself += update_score(outcome, selection_points_myself)
-    return points_myself
+        score += update_score_first(game)
+    return score
 
-points_myself = first_task('input.txt')
-print('First task:', points_myself)
+
+def second_task(file: str):
+    content = load_data(file)
+    games = parse_data(content)
+    score = 0
+    for game in games:
+        score += update_score_second(game)
+    return score
+
+
+
+points = first_task('input.txt')
+print('First task:', points)
+
+
+points = second_task('input.txt')
+print('Second task:', points)
