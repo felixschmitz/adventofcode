@@ -17,20 +17,18 @@ def parse_game(game: str):
 
 def update_score_first(game: list) -> int:
     loosing_combinations = [[1, 3], [3, 2], [2, 1]]
-    if game[0] == game[1]:
-        return game[1] + 3
-    elif game in loosing_combinations:
+    if game in loosing_combinations:
         return game[1]
+    elif game[0] == game[1]:
+        return game[1] + 3
     else:
         return game[1] + 6
 
 def update_score_second(game: list) -> int:
     combinations = [[1, 3], [3, 2], [2, 1]]
-    # X/1 -> loose, Y/2 -> draw, Z/3 -> win
     if game[1] == 1:
         idx = [combination[0] for combination in combinations].index(game[0])
         choice = combinations[idx][1]
-        #print(game, choice)
         return choice
     elif game[1] == 2:
         choice = game[0]
@@ -41,7 +39,7 @@ def update_score_second(game: list) -> int:
         return choice + 6
 
 
-def first_task(file: str):
+def first_task(file: str) -> int:
     content = load_data(file)
     games = parse_data(content)
     score = 0
@@ -50,7 +48,7 @@ def first_task(file: str):
     return score
 
 
-def second_task(file: str):
+def second_task(file: str) -> int:
     content = load_data(file)
     games = parse_data(content)
     score = 0
