@@ -5,7 +5,7 @@ def test_first_task():
     assert points == 15
 
 
-def test_task2():
+def test_second_task():
     points = second_task('sample_input.txt')
     assert points == 12
     
