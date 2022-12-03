@@ -1,3 +1,11 @@
-from solution import parse_rucksack
+from solution import first_task, second_task
 
-print(parse_rucksack('AaZz'))
+def test_first_task():
+    priorities_sum = first_task('sample_input.txt')
+    assert priorities_sum == 157
+
+
+def test_second_task():
+    priorities_sum = second_task('sample_input.txt')
+    assert priorities_sum == 70
+    
