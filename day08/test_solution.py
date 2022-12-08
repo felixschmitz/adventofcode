@@ -7,6 +7,6 @@ def test_first_task():
 
 
 def test_second_task():
-    max_ = first_task('sample_input.txt')
+    max_ = second_task('sample_input.txt')
     assert type(max_) == int
     assert max_ == 8
