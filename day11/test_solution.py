@@ -1,5 +1,6 @@
 from solution import first_task, second_task
 
+
 def test_first_task():
     prod_ = first_task('sample_input.txt')
     assert type(prod_) == int
