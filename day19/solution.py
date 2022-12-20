@@ -17,8 +17,6 @@ def parse_data(line: str) -> list:
     i,a,b,c,d,e,f = map(int, re.findall(r'\d+',line))
     return (i, (V(0,0,0,a), V(0,0,0,1)), (V(0,0,0,b), V(0,0,1,0)),
                (V(0,0,d,c), V(0,1,0,0)), (V(0,f,0,e), V(1,0,0,0)))
-    '''with open(file, 'r', encoding='utf-8') as fhandle:
-        return [list(i) for i in map(blueprint, fhandle.readlines())]'''
 
 def run(blueprint, t):
     todo = [(V(0,0,0,0), V(0,0,0,1))]
