@@ -1,6 +1,11 @@
-from solution import first_task
+from solution import first_task, second_task
 
 
 def test_first_task():
-    increase_window_counter = first_task("sample_input.txt")
-    assert increase_window_counter == 5
+    hv_product = first_task("sample_input.txt")
+    assert hv_product == 150
+
+
+def test_second_task():
+    hva_product = second_task("sample_input.txt")
+    assert hva_product == 900

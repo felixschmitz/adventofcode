@@ -3,29 +3,50 @@ def data_loader(file: str) -> str:
         return fhandle.read()
 
 
-def data_parser(content: str) -> list:
-    return list(map(int, content.splitlines()))
+def movement_parser(content: str) -> tuple:
+    horizontal_position = 0
+    vertical_position = 0
+    for line in content.splitlines():
+        direction, value = line.split(" ")
+        if direction == "forward":
+            horizontal_position += int(value)
+        elif direction == "up":
+            vertical_position -= int(value)
+        elif direction == "down":
+            vertical_position += int(value)
+    return horizontal_position, vertical_position
 
 
-def sliding_window(data: list, window_size: int) -> list:
-    return list(
-        map(
-            sum, [data[i : i + window_size] for i in range(len(data) - window_size + 1)]
-        )
-    )
-
-
-def depth_transformer(data: list) -> list:
-    return [data[i] - data[i - 1] > 0 for i in range(1, len(data))]
+def aim_movement_parser(content: str) -> tuple:
+    horizontal_position = 0
+    vertical_position = 0
+    aim_position = 0
+    for line in content.splitlines():
+        direction, value = line.split(" ")
+        if direction == "forward":
+            horizontal_position += int(value)
+            vertical_position += int(value) * aim_position
+        elif direction == "up":
+            aim_position -= int(value)
+        elif direction == "down":
+            aim_position += int(value)
+    return horizontal_position, vertical_position
 
 
 def first_task(file: str):
     content = data_loader(file)
-    data = data_parser(content)
-    data_windows = sliding_window(data, 3)
-    data_increasing = depth_transformer(data_windows)
-    return sum(data_increasing)
+    horizontal, vertical = movement_parser(content)
+    return horizontal * vertical
 
 
-increase_counter = first_task("input.txt")
-print("First task:", increase_counter)
+def second_task(file: str):
+    content = data_loader(file)
+    horizontal, vertical = aim_movement_parser(content)
+    return horizontal * vertical
+
+
+hv_product = first_task("input.txt")
+print("First task:", hv_product)
+
+hva_product = second_task("input.txt")
+print("Second task:", hva_product)
