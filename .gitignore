@@ -11,3 +11,5 @@ input
 # pixi environments
 .pixi
 *.egg-info
+
+bld/
