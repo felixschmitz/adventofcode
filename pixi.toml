@@ -1,0 +1,12 @@
+[project]
+authors = ["Felix Schmitz <felixschmitz57@gmail.com>"]
+channels = ["conda-forge"]
+description = "Advent of Code solutions"
+name = "adventofcode"
+platforms = ["osx-arm64"]
+version = "0.1.0"
+
+[tasks]
+
+[dependencies]
+pytask = ">=0.5.2,<0.6"
