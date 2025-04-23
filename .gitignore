@@ -13,3 +13,5 @@ input
 *.egg-info
 
 bld/
+
+*.pdf
