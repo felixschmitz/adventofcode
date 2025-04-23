@@ -6,8 +6,10 @@ async function main() {
     try {
         const data = await readFile(path, encoding)
         const matrix = parseData(data)
-        const total = calculateTotalAbsDistance(matrix)
-        console.log("Total abs distance:", total)
+        const solution1 = part1(matrix)
+        console.log("Solution of part 1:", solution1)
+        const solution2 = part2(matrix)
+        console.log("Solution of part 2:", solution2)
     } catch (err) {
         console.error("Error reading file:", err)
     }
@@ -19,6 +21,26 @@ function parseData(raw: string): number[][] {
         .trim()
         .split("\n")
         .map(line => line.trim().split(/\s+/).map(Number))
+}
+
+function part1(matrix: number[][]): number {
+    const total = calculateTotalAbsDistance(matrix)
+    return total
+}
+
+function part2(matrix: number[][]): number {
+    const left = matrix.map(row => row[0])
+    const right = matrix.map(row => row[1])
+
+    const leftFreq = countFrequencies(left)
+    const rightFreq = countFrequencies(right)
+
+    let total = 0
+    for (const [value, countInLeft] of leftFreq.entries()) {
+        const countInRight = rightFreq.get(value) ?? 0
+        total += value * countInLeft * countInRight
+    }
+    return total
 }
 
 function calculateTotalAbsDistance(matrix: number[][]): number {
@@ -45,4 +67,15 @@ function calculateTotalAbsDistance(matrix: number[][]): number {
     }
     return total
 }
+
+
+function countFrequencies(arr: number[]): Map<number, number> {
+    const freq = new Map<number, number>()
+    for (const x of arr) {
+        freq.set(x, (freq.get(x) ?? 0) + 1)
+    }
+    return freq
+}
+
+
 main()
